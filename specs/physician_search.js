@@ -108,7 +108,7 @@ describe('invalid login functionality tests', function(){
         // wait for 3 seconds
         browser.sleep(3000)
 
-        // scroll to the bottom of the page
+        // scroll to the top of the page
         browser.executeScript('window.scrollTo(0,-10000);');
 
         // wait for 3 seconds
@@ -185,7 +185,10 @@ describe('invalid login functionality tests', function(){
 
         // wait for 3 seconds
         browser.sleep(3000)
-
+        
+        // scroll down to the bottom of the page
+        //browser.executeScript('window.scrollTo(0,10000);');
+        
         // drag slider
         var slider = element(by.css(".ng5-slider-span.ng5-slider-pointer.ng5-slider-pointer-min"))
         browser.actions().dragAndDrop(slider,{x:90,y:0}).perform();
