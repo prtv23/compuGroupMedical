@@ -12,7 +12,7 @@ exports.config = {
 
   // Spec patterns are relative to the current working directory when
   // protractor is called.
-  specs: ['C:/Users/Admin/Desktop/Projects/CompuGroupMedical/specs/login_tests.js'],
+  specs: ['C:/Users/Admin/Desktop/Projects/CompuGroupMedical/specs/physician_search_tests.js'],
 
   // Options to be passed to Jasmine.
   jasmineNodeOpts: {
