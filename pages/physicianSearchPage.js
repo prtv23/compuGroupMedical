@@ -13,12 +13,12 @@ let physician_searchPage = function(){
     let radius_slider = element(by.css(".ng5-slider-span.ng5-slider-pointer.ng5-slider-pointer-min"))
     let suggestion_dropDown = element(by.css(".dropdown.open.dropdown-menu>h6"))
     let loadMore_link = element(by.css(".load-more-link"))
-    let locationValue_dropDown = element(by.cssContainingText('span', '56567'))
     let noResults_card = element(by.css(".card-image"))
     let acceptTracking_btn = element(by.css(".accept-tracking-button"))
     let physicianName_card = element.all(by.css('.physician-name.align-self-center'))
     let physicianName_location = element.all(by.css("span[translate='general.unit.kilometers']"))
-    let physicianName_appointment = element.all(by.css("span[translate='physician.appointment.types']>font>font"))
+    let physicianName_appointment = element.all(by.css(".icon.icon-sm.icon-CH_calendarMonth"))
+    let physicianName_videoConf = element.all(by.css(".icon.icon-sm.icon-CH_calendarMonth"))
     
 
     this.get = function(url){
@@ -132,19 +132,24 @@ let physician_searchPage = function(){
         // wait for 3 seconds
         browser.sleep(3000)
         // verify, if the results displayed have Appointments available
-        physicianName_appointment.getText().then(function(menus) {
-            let tc_res = menus.map(i=> i=='Appointment type ').every(a=> a == true);
-            // verifies if the Test Result is a Pass, by checking for 'TRUE'
-            expect(tc_res).toBe(true);
-        });
+        // calendar icon is enabled, on Online Appointment selection. validating the calendar icon
+        expect(physicianName_appointment.isPresent()).toBe(true);
         // uncheck the Online Bookable checkbox
         onlineBooking_input.click();
         // check the video conference checkbox
         videoCall_input.click();
+        // clear the name search input field
+        name_input.clear();
         // click on the search button
         search_btn.click();
         // wait for 3 seconds
         browser.sleep(3000)
+        // iterating all the reesult values to check, if the results are available for video conference
+        physicianName_videoConf.then(function(menus) {
+            let tc_res = menus.map(i=> expect(i.isPresent())).every(a=> a == true);
+            // verifies if the Test Result is a Pass, by checking for 'TRUE'
+            expect(tc_res).toBe(true);
+        });
         // uncheck the video conference checkbox
         videoCall_input.click();
         // chceck the Barrier Free checkbox
