@@ -13,10 +13,13 @@ let physician_searchPage = function(){
     let radius_slider = element(by.css(".ng5-slider-span.ng5-slider-pointer.ng5-slider-pointer-min"))
     let suggestion_dropDown = element(by.css(".dropdown.open.dropdown-menu>h6"))
     let loadMore_link = element(by.css(".load-more-link"))
-    let locationValue_dropDown = element(by.cssContainingText('span', '5657'))
+    let locationValue_dropDown = element(by.cssContainingText('span', '56567'))
     let noResults_card = element(by.css(".card-image"))
     let acceptTracking_btn = element(by.css(".accept-tracking-button"))
-
+    let physicianName_card = element.all(by.css('.physician-name.align-self-center'))
+    let physicianName_location = element.all(by.css("span[translate='general.unit.kilometers']"))
+    let physicianName_appointment = element.all(by.css("span[translate='physician.appointment.types']>font>font"))
+    
 
     this.get = function(url){
         browser.get(url);
@@ -53,7 +56,7 @@ let physician_searchPage = function(){
         browser.sleep(2000)
         // verify if suggestion drop down is present
         expect(name_input.isPresent()).toBe(true);
-        // enter data into the Name field
+        // enter data into the Name field for which no results exist
         name_input.sendKeys(invalidNameInput);
         // wait for the element to load
         browser.sleep(2000)
@@ -67,9 +70,30 @@ let physician_searchPage = function(){
         search_btn.click();
         // wait for  seconds
         browser.sleep(3000)
+        // validate if the search results match the input search criteria
+        // captures all the search results from the page and verifies, if the search results are- 
+        // -as expected per the search input provided
+        physicianName_card.getText().then(function(menus) {
+            // iterates all the elements in the array and verifies, if it matches to the search input
+            // if all the elements in the array match the search input, 'true' is returned
+            // if all or any one of the elements in the array does not match the search input, 'false' is returned
+            // let tc_res = menus.map(i=> i == validNameInput).every(a=> a == true);
+            let tc_res = menus.map(i=> i.includes(validNameInput)).every(a=> a == true);
+            // verifies if the Test Result is a Pass, by checking for 'TRUE'
+            expect(tc_res).toBe(true);
+        });
+        
     };
 
-    this.clickShowMoreLink = function(){
+    this.validateNameAndLocationSearch = function(nameToSearch, locInput, distFrmLoc){
+        // clear data in the Name field
+        name_input.clear();
+        // enter data into the Name field
+        name_input.sendKeys(nameToSearch);
+        // click on the search button
+        search_btn.click();
+        // wait for  seconds
+        browser.sleep(3000)
         // scroll to the bottom of the page
         browser.executeScript('window.scrollTo(0,10000);');
         // wait for 3 seconds
@@ -83,17 +107,19 @@ let physician_searchPage = function(){
         // wait for 3 seconds
         browser.sleep(3000)
         // enter data into the location field
-        location_input.sendKeys("5657");
-        // wait for 3 seconds
-        browser.sleep(3000)
-        // click drop down value
-        locationValue_dropDown.click();
+        location_input.sendKeys(locInput);
         // wait for 3 seconds
         browser.sleep(3000)
         // click on the search button
         search_btn.click();
         // wait for 3 seconds
         browser.sleep(3000)
+        // verify, if the results display distance to the entered location
+        physicianName_location.getText().then(function(menus) {
+            let tc_res = menus.map(i=> i==distFrmLoc).every(a=> a == true);
+            // verifies if the Test Result is a Pass, by checking for 'TRUE'
+            expect(tc_res).toBe(true);
+        });
     };
 
     this.performAllSearchActions = function(){
@@ -105,6 +131,12 @@ let physician_searchPage = function(){
         search_btn.click();
         // wait for 3 seconds
         browser.sleep(3000)
+        // verify, if the results displayed have Appointments available
+        physicianName_appointment.getText().then(function(menus) {
+            let tc_res = menus.map(i=> i=='Appointment type ').every(a=> a == true);
+            // verifies if the Test Result is a Pass, by checking for 'TRUE'
+            expect(tc_res).toBe(true);
+        });
         // uncheck the Online Bookable checkbox
         onlineBooking_input.click();
         // check the video conference checkbox
