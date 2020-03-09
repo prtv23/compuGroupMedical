@@ -1,3 +1,5 @@
+let utilities = require('../utils/utilities')
+
 let homepage = function(){
     
     let profileIcon_link = element(by.css('#menu-item-2004>a'))
@@ -11,14 +13,19 @@ let homepage = function(){
     };
 
     this.clickProfileLink = function(){
+        utilities.waitTillElementAppears(profileIcon_link);
         profileIcon_link.click();
     };
 
     this.enterEmailAddress = function(email){
+        utilities.waitTillElementAppears(emailAddress_input);
+        emailAddress_input.clear();
         emailAddress_input.sendKeys(email);
     };
 
     this.enterPassword = function(password){
+        utilities.waitTillElementAppears(password_input);
+        password_input.clear();
         password_input.sendKeys(password);
     };
 
@@ -27,13 +34,14 @@ let homepage = function(){
     };
 
     this.verifySignInError = function(){
+        utilities.waitTillElementAppears(signInError_msg);
         let output = signInError_msg
         expect(output.isPresent()).toBe(true);
     };
 
-    this.verifyLoginSuccess = function(){
+    this.verifyLoginSuccess = function(pageTitle){
         let landing_PageTitle = browser.getTitle()
-        expect(landing_PageTitle).toEqual("Mein Profil | CLICKDOC");
+        expect(landing_PageTitle).toEqual(pageTitle);
     };
 };
 

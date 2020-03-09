@@ -1,3 +1,6 @@
+const isArraySorted = require('is-array-sorted');
+let utilities = require('../utils/utilities')
+
 let physician_searchPage = function(){
     
     let suchseite_link = element(by.css("#menu-item-10>a"))
@@ -20,16 +23,17 @@ let physician_searchPage = function(){
     let physicianName_appointment = element.all(by.css(".icon.icon-sm.icon-CH_calendarMonth"))
     let physicianName_videoConf = element.all(by.css(".icon.icon-sm.icon-CH_calendarMonth"))
     
-
     this.get = function(url){
         browser.get(url);
     };
 
     this.clickSuchseiteLink = function(){
+        utilities.waitTillElementAppears(suchseite_link);
         suchseite_link.click();
     };
 
     this.validatePresenceOfElements_SearchSection = function(){
+        utilities.waitTillElementAppears(name_input);
         expect(name_input.isPresent()).toBe(true);
         expect(location_input.isPresent()).toBe(true);
         expect(onlineBooking_input.isPresent()).toBe(true);
@@ -39,6 +43,7 @@ let physician_searchPage = function(){
     };
 
     this.validatePresenceOfElements_SortSection = function(){
+        utilities.waitTillElementAppears(bestResults_chkbx);
         expect(bestResults_chkbx.isPresent()).toBe(true);
         expect(sortAlphabetically_chkbx.isPresent()).toBe(true);
         expect(location_chkbx.isPresent()).toBe(true);
@@ -50,12 +55,15 @@ let physician_searchPage = function(){
     };
 
     this.validateNameSearch = function(validNameInput, invalidNameInput) {
+        // wait for the element to load
+        utilities.waitTillElementAppears(name_input);
         // enter data into the Name field
         name_input.sendKeys(validNameInput);
         // wait for the element to load
-        browser.sleep(2000)
+        // browser.sleep(2000)
+        utilities.waitTillElementAppears(suggestion_dropDown);
         // verify if suggestion drop down is present
-        expect(name_input.isPresent()).toBe(true);
+        expect(suggestion_dropDown.isPresent()).toBe(true);
         // enter data into the Name field for which no results exist
         name_input.sendKeys(invalidNameInput);
         // wait for the element to load
@@ -68,8 +76,8 @@ let physician_searchPage = function(){
         name_input.sendKeys(validNameInput);
         // click on the search button
         search_btn.click();
-        // wait for  seconds
-        browser.sleep(3000)
+        // wait for 3 seconds
+        browser.sleep(3000);
         // validate if the search results match the input search criteria
         // captures all the search results from the page and verifies, if the search results are- 
         // -as expected per the search input provided
@@ -96,20 +104,23 @@ let physician_searchPage = function(){
         browser.sleep(3000)
         // scroll to the bottom of the page
         browser.executeScript('window.scrollTo(0,10000);');
-        // wait for 3 seconds
-        browser.sleep(3000)
+        // wait for element to load
+        //browser.sleep(3000)
+        utilities.waitTillElementAppears(loadMore_link);
         // click the Show More link
         loadMore_link.click();
         // wait for 3 seconds
         browser.sleep(3000)
         // scroll to the top of the page
         browser.executeScript('window.scrollTo(0,-10000);');
-        // wait for 3 seconds
-        browser.sleep(3000)
+        // wait for element to load
+        //browser.sleep(3000)
+        utilities.waitTillElementAppears(location_input);
         // enter data into the location field
         location_input.sendKeys(locInput);
-        // wait for 3 seconds
-        browser.sleep(3000)
+        // wait for elelment to load
+        // browser.sleep(3000)
+        utilities.waitTillElementAppears(search_btn);
         // click on the search button
         search_btn.click();
         // wait for 3 seconds
@@ -122,27 +133,31 @@ let physician_searchPage = function(){
         });
     };
 
-    this.performAllSearchActions = function(){
+    this.validateOnlineAppointmentSearch = function(){
         // check the Online Bookable checkbox
         onlineBooking_input.click();
-        // wait for 3 seconds
-        browser.sleep(3000)
+        // wait for element to load
+        //browser.sleep(3000)
+        utilities.waitTillElementAppears(search_btn);
         // click on the search button
         search_btn.click();
-        // wait for 3 seconds
+        // wait for element to load
         browser.sleep(3000)
         // verify, if the results displayed have Appointments available
         // calendar icon is enabled, on Online Appointment selection. validating the calendar icon
         expect(physicianName_appointment.isPresent()).toBe(true);
         // uncheck the Online Bookable checkbox
         onlineBooking_input.click();
+    };
+
+    this.validateVideoConfSearch = function(){
         // check the video conference checkbox
         videoCall_input.click();
         // clear the name search input field
         name_input.clear();
         // click on the search button
         search_btn.click();
-        // wait for 3 seconds
+        // wait for element to load
         browser.sleep(3000)
         // iterating all the reesult values to check, if the results are available for video conference
         physicianName_videoConf.then(function(menus) {
@@ -152,7 +167,10 @@ let physician_searchPage = function(){
         });
         // uncheck the video conference checkbox
         videoCall_input.click();
-        // chceck the Barrier Free checkbox
+    };
+
+    this.clickOnDataCollectionPopUp = function(){
+        // check the Barrier Free checkbox
         accessibility_input.click();
         // click on the search button
         search_btn.click();
@@ -160,17 +178,27 @@ let physician_searchPage = function(){
         browser.sleep(3000)
         // click on the Data Collection popup banner as it would interupt element click
         acceptTracking_btn.click();
-        // wait for 3 seconds
-        browser.sleep(3000)
+        // wait for element to load
+        utilities.waitTillElementAppears(sortAlphabetically_chkbx);
+    };
+
+    this.validateAlphabeticalSort = function(){
         // check the Alphabetical Sort checkbox
         sortAlphabetically_chkbx.click();
-        // wait for 3 seconds : Should use browser.sleep as the lement is already loaded
+        // wait for 3 seconds
         browser.sleep(3000)
+        // verify the displayed results are sorted alphabetically
+        physicianName_card.getText().then(function(menus) {
+            let tc_res = isArraySorted(menus.map(i=> i.split('Beate ')[1]));
+            expect(tc_res).toBe(true);
+        });
+    };
+
+    this.locationSearch = function(){    
         // check the Distance Sort checkbox
         location_chkbx.click();
-        // wait for 3 seconds
-        browser.sleep(3000)  
-        // drag slider
+        // wait for element to load
+        utilities.waitTillElementAppears(radius_slider);
         var slider = radius_slider
         browser.actions().dragAndDrop(slider,{x:90,y:0}).perform();
         browser.sleep(5000)
