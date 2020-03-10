@@ -54,13 +54,9 @@ describe('invalid login functionality tests', function(){
         login_Page.clickLogin();
 
          // wait for the landing page - user profile page
-         browser.sleep(10000)
+         browser.sleep(15000)
 
         // verification if the login is successfull - validation done on the page title
         login_Page.verifyLoginSuccess(login_data.pageTitle);
-
-        // close the browser
-        browser.close();
-
     });
 });    

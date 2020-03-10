@@ -59,8 +59,6 @@ let physician_searchPage = function(){
         utilities.waitTillElementAppears(name_input);
         // enter data into the Name field
         name_input.sendKeys(validNameInput);
-        // wait for the element to load
-        // browser.sleep(2000)
         utilities.waitTillElementAppears(suggestion_dropDown);
         // verify if suggestion drop down is present
         expect(suggestion_dropDown.isPresent()).toBe(true);
@@ -100,12 +98,10 @@ let physician_searchPage = function(){
         name_input.sendKeys(nameToSearch);
         // click on the search button
         search_btn.click();
-        // wait for  seconds
+        // wait for 3 seconds
         browser.sleep(3000)
         // scroll to the bottom of the page
         browser.executeScript('window.scrollTo(0,10000);');
-        // wait for element to load
-        //browser.sleep(3000)
         utilities.waitTillElementAppears(loadMore_link);
         // click the Show More link
         loadMore_link.click();
@@ -113,13 +109,9 @@ let physician_searchPage = function(){
         browser.sleep(3000)
         // scroll to the top of the page
         browser.executeScript('window.scrollTo(0,-10000);');
-        // wait for element to load
-        //browser.sleep(3000)
         utilities.waitTillElementAppears(location_input);
         // enter data into the location field
         location_input.sendKeys(locInput);
-        // wait for elelment to load
-        // browser.sleep(3000)
         utilities.waitTillElementAppears(search_btn);
         // click on the search button
         search_btn.click();
@@ -137,7 +129,6 @@ let physician_searchPage = function(){
         // check the Online Bookable checkbox
         onlineBooking_input.click();
         // wait for element to load
-        //browser.sleep(3000)
         utilities.waitTillElementAppears(search_btn);
         // click on the search button
         search_btn.click();
@@ -197,7 +188,7 @@ let physician_searchPage = function(){
     this.locationSearch = function(){    
         // check the Distance Sort checkbox
         location_chkbx.click();
-        // wait for element to load
+        browser.sleep(5000);
         utilities.waitTillElementAppears(radius_slider);
         var slider = radius_slider
         browser.actions().dragAndDrop(slider,{x:90,y:0}).perform();

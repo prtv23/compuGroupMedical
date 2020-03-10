@@ -41,8 +41,9 @@ describe('invalid login functionality tests', function(){
         // enter data into the Name field and verify the search results shown are appropriate
         physician_page.validateNameSearch(physicianSearch_data.validName, physicianSearch_data.invalidName);
 
-        // wait for 3 seconds
-        // browser.sleep(3000)
+        // scroll to the bottom of the page => click on show more link
+        // scroll to the top of the page => search based on Location and verify if the results are approrpiate
+        physician_page.validateNameAndLocationSearch(physicianSearch_data.nameToSearch, physicianSearch_data.locInput, physicianSearch_data.distFrmLoc);
 
         // verify if appropriate results are displayed for search on 'Online Appointments'
         physician_page.validateOnlineAppointmentSearch();
@@ -58,10 +59,6 @@ describe('invalid login functionality tests', function(){
 
         // perform all the search actions on the page
         physician_page.locationSearch();
-
-        // scroll to the bottom of the page => click on show more link
-        // scroll to the top of the page => search based on Location and verify if the results are approrpiate
-        physician_page.validateNameAndLocationSearch(physicianSearch_data.nameToSearch, physicianSearch_data.locInput, physicianSearch_data.distFrmLoc);
         
         // close the browser
         browser.close();
