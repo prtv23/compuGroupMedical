@@ -7,6 +7,8 @@ let homepage = function(){
     let password_input = element(by.css('#mat-input-1'))
     let login_btn = element(by.css('.life-btn.life-primary-btn.colored'))
     let signInError_msg = element(by.css('.d-flex.justify-content-center.flex-column>p')) 
+    let avatarIcon = element(by.css('.avatar-pointer'))
+    let logOut_btn = element(by.xpath("//div[@class='dropdown-container']/a/div[@class='menu-link']/span[contains(text(),'Logout')]"));
 
     this.get = function(url){
         browser.get(url);
@@ -43,6 +45,13 @@ let homepage = function(){
         let landing_PageTitle = browser.getTitle()
         expect(landing_PageTitle).toEqual(pageTitle);
     };
+
+    this.logOutFromApp = function(){
+        avatarIcon.click();
+        logOut_btn.click();
+        utilities.waitTillElementAppears(profileIcon_link);
+        expect(profileIcon_link.isPresent()).toBe(true);
+    }
 };
 
 module.exports = new homepage();

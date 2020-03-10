@@ -58,5 +58,8 @@ describe('invalid login functionality tests', function(){
 
         // verification if the login is successfull - validation done on the page title
         login_Page.verifyLoginSuccess(login_data.pageTitle);
+
+        // logout from the application
+        login_Page.logOutFromApp();
     });
 });    
