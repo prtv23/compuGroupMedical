@@ -11,7 +11,8 @@ exports.config = {
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
+    //'marionette':'true',
   },
 
   // Framework to use. Jasmine is recommended.
@@ -22,7 +23,8 @@ exports.config = {
   // specs: ['C:/Users/Admin/Desktop/Projects/CompuGroupMedical/specs/login_tests.js'],
   // specs: ['C:/Users/Admin/Desktop/Projects/CompuGroupMedical/specs/physician_search_tests.js'],
   suites:{
-        demo : ['C:/Users/Admin/Desktop/Projects/CompuGroupMedical/specs/*.js']  
+        demo : ['C:/Users/Admin/Desktop/Projects/CompuGroupMedical/specs/*.js']
+        // demo : ['C:/Users/Admin/Desktop/Projects/CompuGroupMedical/specs/Magazin_tests.js']
   },
 
   // Options to be passed to Jasmine.

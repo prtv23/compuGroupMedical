@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites disabled="0" errors="0" failures="0" tests="2" time="92.405">
- <testsuite name="invalid login functionality tests" timestamp="2020-03-10T09:49:11" hostname="localhost" time="45.973" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="invalid login functionality tests" name="invalid login check" time="45.898" />
+<testsuites disabled="0" errors="0" failures="0" tests="2" time="102.134">
+ <testsuite name="invalid login functionality tests" timestamp="2020-03-24T12:37:08" hostname="localhost" time="45.835" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="invalid login functionality tests" name="invalid login check" time="45.825" />
  </testsuite>
- <testsuite name="invalid login functionality tests" timestamp="2020-03-10T09:49:57" hostname="localhost" time="46.432" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="invalid login functionality tests" name="Physician Search Page Check" time="46.428" />
+ <testsuite name="Physician Search Page tests" timestamp="2020-03-24T12:37:54" hostname="localhost" time="56.299" errors="0" tests="1" skipped="0" disabled="0" failures="0">
+  <testcase classname="Physician Search Page tests" name="Physician Search Page Check" time="56.292" />
  </testsuite>
 </testsuites>

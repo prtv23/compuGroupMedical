@@ -8,7 +8,7 @@ let homepage = function(){
     let login_btn = element(by.css('.life-btn.life-primary-btn.colored'))
     let signInError_msg = element(by.css('.d-flex.justify-content-center.flex-column>p')) 
     let avatarIcon = element(by.css('.avatar-pointer'))
-    let logOut_btn = element(by.xpath("//div[@class='dropdown-container']/a/div[@class='menu-link']/span[contains(text(),'Logout')]"));
+    let logOut_btn = element(by.xpath("//div[@class='dropdown-container']//span[contains(text(),'Logout')]"));
 
     this.get = function(url){
         browser.get(url);

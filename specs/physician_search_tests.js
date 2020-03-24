@@ -1,7 +1,7 @@
 let physician_page = require('../pages/physicianSearchPage');
 let physicianSearch_data = require('../data/physicianSearchPageData')
 
-describe('invalid login functionality tests', function(){
+describe('Physician Search Page tests', function(){
 
     var originalTimeout;
 
@@ -34,10 +34,16 @@ describe('invalid login functionality tests', function(){
         
         // verify if all the web elements in the Sort Section is present
         physician_page.validatePresenceOfElements_SortSection();
-        
+
         // verify if the results section is initially empty
         physician_page.validateResultsSection();
 
+        // click on the data collection pop up to avoid interruption & click on Accessibility
+        physician_page.clickOnDataCollectionPopUp();
+
+        // validate if alphabetical search works appropriately
+        physician_page.validateAlphabeticalSort(physicianSearch_data.validName);
+        
         // enter data into the Name field and verify the search results shown are appropriate
         physician_page.validateNameSearch(physicianSearch_data.validName, physicianSearch_data.invalidName);
 
@@ -51,16 +57,11 @@ describe('invalid login functionality tests', function(){
         // verify if appropriate results are displayed for search on 'Video Conference'
         physician_page.validateVideoConfSearch();
 
-        // click on the data collection pop up to avoid interruption & click on Accessibility
-        physician_page.clickOnDataCollectionPopUp();
-
-        // validate if alphabetical search works appropriately
-        physician_page.validateAlphabeticalSort();
-
         // perform all the search actions on the page
-        physician_page.locationSearch();
-        
+        physician_page.locationSearch(physicianSearch_data.locInput);
+
         // close the browser
         browser.close();
+        
     });
 });

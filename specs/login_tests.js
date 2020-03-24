@@ -30,7 +30,7 @@ describe('invalid login functionality tests', function(){
         login_Page.clickProfileLink();
         
         // wait for the Iframe to load
-        browser.sleep(13000);
+        browser.sleep(15000);
 
         // switch to the 5th iframe in the page - Login IFrame
         browser.switchTo().frame(5);
